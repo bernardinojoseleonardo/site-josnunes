@@ -67,11 +67,13 @@ TEMPLATES = [
 WSGI_APPLICATION = 'josnunes.wsgi.application'
 
 # Database
-# https://github.com/schejtman/python-decouple#database-url
+# https://github.com/jakubroztocil/django-database-url
 import dj_database_url
+
 DATABASES = {
     'default': dj_database_url.config(
-        default=config('DATABASE_URL')
+        default=config('DATABASE_URL', default=f'sqlite:///{BASE_DIR / "db.sqlite3"}'),
+        conn_max_age=600
     )
 }
 
