@@ -1,0 +1,164 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Josnunes - Gráfica e Têxtil em Huambo{% endblock %}</title>
+    <meta name="description" content="A Josnunes é especializada em serviços de Gráfica e Têxtil em Huambo, Angola. Qualidade e rapidez para as suas ideias.">
+    
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#0D1C1A',
+                        'accent': '#22C55E',
+                        'light': '#F9FAFB',
+                    },
+                    fontFamily: {
+                        'sans': ['Poppins', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Fancybox for Gallery -->
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"/>
+
+    <style>
+        .whatsapp-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+        .whatsapp-btn:hover {
+            transform: scale(1.1);
+        }
+    </style>
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="bg-white font-sans text-gray-900 flex flex-col min-h-screen">
+
+    <!-- Navbar -->
+    <nav class="bg-primary text-white sticky top-0 z-50 shadow-lg">
+        <div class="container mx-auto px-4 py-2 flex justify-between items-center">
+            <a href="{% url 'home' %}" class="flex items-center space-x-2">
+                <img src="{% static 'img/logo.png' %}" alt="Josnunes Logo" class="h-12 md:h-16 w-auto object-contain">
+            </a>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex space-x-6">
+                <a href="{% url 'home' %}" class="hover:text-accent transition">Início</a>
+                <a href="{% url 'servicos' %}" class="hover:text-accent transition">Serviços</a>
+                <a href="{% url 'galeria' %}" class="hover:text-accent transition">Galeria</a>
+                <a href="{% url 'sobre' %}" class="hover:text-accent transition">Sobre Nós</a>
+                <a href="{% url 'contacto' %}" class="hover:text-accent transition">Contacto</a>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button id="menu-toggle" class="md:hidden text-2xl focus:outline-none">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-primary border-t border-gray-700 pb-4">
+            <a href="{% url 'home' %}" class="block px-4 py-2 hover:bg-gray-800">Início</a>
+            <a href="{% url 'servicos' %}" class="block px-4 py-2 hover:bg-gray-800">Serviços</a>
+            <a href="{% url 'galeria' %}" class="block px-4 py-2 hover:bg-gray-800">Galeria</a>
+            <a href="{% url 'sobre' %}" class="block px-4 py-2 hover:bg-gray-800">Sobre Nós</a>
+            <a href="{% url 'contacto' %}" class="block px-4 py-2 hover:bg-gray-800">Contacto</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow">
+        {% if messages %}
+            <div class="container mx-auto px-4 mt-4">
+                {% for message in messages %}
+                    <div class="p-4 rounded-lg {% if message.tags == 'success' %}bg-green-100 text-green-700{% else %}bg-red-100 text-red-700{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-primary text-white py-10">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <img src="{% static 'img/logo.png' %}" alt="Josnunes Logo" class="h-20 w-auto mb-6">
+                    <p class="text-gray-400">Especialistas em Gráfica e Têxtil. Qualidade, pontualidade e compromisso com o seu sucesso.</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-accent mb-4">Links Rápidos</h3>
+                    <ul class="space-y-2">
+                        <li><a href="{% url 'home' %}" class="text-gray-400 hover:text-white transition">Início</a></li>
+                        <li><a href="{% url 'servicos' %}" class="text-gray-400 hover:text-white transition">Serviços</a></li>
+                        <li><a href="{% url 'galeria' %}" class="text-gray-400 hover:text-white transition">Galeria</a></li>
+                        <li><a href="{% url 'contacto' %}" class="text-gray-400 hover:text-white transition">Contacto</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-accent mb-4">Siga-nos</h3>
+                    <div class="flex space-x-4">
+                        <a href="{{ settings.FACEBOOK_URL }}" class="text-2xl text-gray-400 hover:text-white transition"><i class="fab fa-facebook"></i></a>
+                        <a href="{{ settings.INSTAGRAM_URL }}" class="text-2xl text-gray-400 hover:text-white transition"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-10 pt-6 text-center text-gray-500">
+                <p>&copy; 2025 Josnunes. Todos os direitos reservados. Huambo, Angola.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/{{ settings.WHATSAPP_NUMBER }}" class="whatsapp-btn" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Initialize Fancybox
+        Fancybox.bind("[data-fancybox]", {});
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}Galeria - Josnunes Gráfica e Têxtil{% endblock %}
+
+{% block content %}
+<section class="bg-primary text-white py-16">
+    <div class="container mx-auto px-4 text-center">
+        <h1 class="text-4xl font-bold mb-6">Nossos Projetos</h1>
+        <p class="text-xl text-gray-300">Confira a qualidade do nosso trabalho em Gráfica e Têxtil.</p>
+    </div>
+</section>
+
+<!-- Gallery Filter -->
+<section class="py-12 bg-light">
+    <div class="container mx-auto px-4 text-center">
+        <div class="flex flex-wrap justify-center space-x-4 mb-12">
+            <button class="filter-btn active bg-accent text-primary px-6 py-2 rounded-full font-bold mb-4" data-category="all">Todos</button>
+            <button class="filter-btn bg-white text-primary px-6 py-2 rounded-full font-bold shadow-md hover:bg-accent hover:text-primary transition mb-4" data-category="grafica">Gráfica</button>
+            <button class="filter-btn bg-white text-primary px-6 py-2 rounded-full font-bold shadow-md hover:bg-accent hover:text-primary transition mb-4" data-category="textil">Têxtil</button>
+            <button class="filter-btn bg-white text-primary px-6 py-2 rounded-full font-bold shadow-md hover:bg-accent hover:text-primary transition mb-4" data-category="outro">Outros</button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="gallery-grid">
+            {% for foto in fotos %}
+            <div class="gallery-item relative group overflow-hidden rounded-lg aspect-square" data-category="{{ foto.categoria }}">
+                <img src="{{ foto.imagem.url }}" alt="{{ foto.titulo }}" class="w-full h-full object-cover transform transition group-hover:scale-110">
+                <div class="absolute inset-0 bg-primary bg-opacity-60 opacity-0 group-hover:opacity-100 transition flex items-center justify-center p-4">
+                    <div class="text-center">
+                        <h4 class="text-white font-bold text-lg mb-2">{{ foto.titulo }}</h4>
+                        <a href="{{ foto.imagem.url }}" data-fancybox="gallery" class="bg-accent text-primary px-4 py-2 rounded-full text-sm font-bold">Ver Ampliado</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-span-4 text-center text-gray-500 py-12">
+                Nenhum projeto encontrado.
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination -->
+        {% if fotos.has_other_pages %}
+        <div class="mt-12 flex justify-center space-x-2">
+            {% if fotos.has_previous %}
+                <a href="?page={{ fotos.previous_page_number }}" class="px-4 py-2 bg-white text-primary rounded-lg border border-gray-200 hover:bg-accent hover:text-primary transition">&laquo; Anterior</a>
+            {% endif %}
+            
+            <span class="px-4 py-2 bg-accent text-primary rounded-lg font-bold">Página {{ fotos.number }} de {{ fotos.paginator.num_pages }}</span>
+            
+            {% if fotos.has_next %}
+                <a href="?page={{ fotos.next_page_number }}" class="px-4 py-2 bg-white text-primary rounded-lg border border-gray-200 hover:bg-accent hover:text-primary transition">Próxima &raquo;</a>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+{% block extra_js %}
+<script>
+    // Filter Functionality
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const galleryItems = document.querySelectorAll('.gallery-item');
+
+    filterButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Remove active class from all buttons
+            filterButtons.forEach(b => b.classList.remove('active', 'bg-accent', 'text-primary'));
+            filterButtons.forEach(b => b.classList.add('bg-white', 'text-primary'));
+            
+            // Add active class to clicked button
+            btn.classList.add('active', 'bg-accent', 'text-primary');
+            btn.classList.remove('bg-white');
+
+            const category = btn.getAttribute('data-category');
+
+            galleryItems.forEach(item => {
+                if (category === 'all' || item.getAttribute('data-category') === category) {
+                    item.classList.remove('hidden');
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}
+{% endblock %}

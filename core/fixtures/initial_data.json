@@ -1,0 +1,68 @@
+[
+  {
+    "model": "core.servico",
+    "pk": 1,
+    "fields": {
+      "nome": "Cartões de Visita",
+      "descricao": "Impressão de alta qualidade em diversos papéis e acabamentos.",
+      "categoria": "grafica",
+      "icone": "fas fa-address-card",
+      "ordem": 1
+    }
+  },
+  {
+    "model": "core.servico",
+    "pk": 2,
+    "fields": {
+      "nome": "Banners e Lonas",
+      "descricao": "Banners de grandes formatos para eventos e publicidade externa.",
+      "categoria": "grafica",
+      "icone": "fas fa-scroll",
+      "ordem": 2
+    }
+  },
+  {
+    "model": "core.servico",
+    "pk": 3,
+    "fields": {
+      "nome": "Flyers e Panfletos",
+      "descricao": "Divulgue sua marca com materiais impressos vibrantes.",
+      "categoria": "grafica",
+      "icone": "fas fa-copy",
+      "ordem": 3
+    }
+  },
+  {
+    "model": "core.servico",
+    "pk": 4,
+    "fields": {
+      "nome": "Uniformes Personalizados",
+      "descricao": "Criação de uniformes para empresas e instituições com bordado ou estampa.",
+      "categoria": "textil",
+      "icone": "fas fa-user-tie",
+      "ordem": 4
+    }
+  },
+  {
+    "model": "core.servico",
+    "pk": 5,
+    "fields": {
+      "nome": "Bordados Computadorizados",
+      "descricao": "Bordados de alta precisão em camisas, bonés e outros têxteis.",
+      "categoria": "textil",
+      "icone": "fas fa-vest",
+      "ordem": 5
+    }
+  },
+  {
+    "model": "core.servico",
+    "pk": 6,
+    "fields": {
+      "nome": "Sublimação em Tecido",
+      "descricao": "Estampas full print em tecidos sintéticos com cores vivas.",
+      "categoria": "textil",
+      "icone": "fas fa-tshirt",
+      "ordem": 6
+    }
+  }
+]
